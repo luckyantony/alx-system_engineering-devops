@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+#Displays 4 then bad luck from China
+#Displays 9 then bad luck from Japan
+#Displays 17 then bad luck from Italy
+var=1
+while [ $var -le 20 ]
+do
+echo "$var"
+case $var in
+"4") echo "bad luck from China";;
+"9") echo "bad luck from Japan";;
+"17") echo "bad luck from Italy";;
+esac
+(( var++ ))
+done

@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+var=0
+while [ $var -lt 10 ]
+do
+    if [ $var -eq 9 ]
+    then
+       echo "Hi"
+    fi
+    echo "Best School"
+    ((var++))
+done
