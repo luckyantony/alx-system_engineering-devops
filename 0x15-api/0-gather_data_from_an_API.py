@@ -1,21 +1,40 @@
 #!/usr/bin/python3
-"""Getting data from an api
-"""
-import requests
-from sys import argv
+''' task 0 module'''
 
 
 if __name__ == '__main__':
-    endpoint = "https://jsonplaceholder.typicode.com"
-    userId = argv[1]
-    user = requests.get(endpoint + "users/{}".
-                        format(userId), verify=False).json()
-    todo = requests.get(endpoint + "todos?userId={}".
-                        format(userId), verify=False).json()
-    completed_tasks = []
-    for task in todo:
-        if task.get('completed') is True:
-            completed_tasks.append(task.get('title'))
-    print("Employee {} is done with tasks({}/{}):".
-          format(user.get('name'), len(completed_tasks), len(todo)))
-    print("\n".join("\t {}".format(task) for task in completed_tasks))
+    import requests
+    from sys import argv
+
+    emp_id = argv[1]
+    total_todos = 0
+    done_todos = 0
+    done_todos_titles = []
+
+    res = requests.get(
+                   'https://jsonplaceholder.typicode.com/users/' +
+                   emp_id)
+    emp_name = res.json().get('name', 'user name not found')
+
+    res = requests.get(
+                   'https://jsonplaceholder.typicode.com/users/' +
+                   emp_id + '/todos')
+    emp_todos = res.json()
+
+    for todo in emp_todos:
+        total_todos += 1
+        if todo.get('completed') is True:
+            done_todos += 1
+            done_todos_titles.append(todo.get(
+                                          'title',
+                                          'no title found'
+                                          ))
+
+    print('Employee {} is done with tasks({}/{}):'.format(
+                                                   emp_name,
+                                                   done_todos,
+                                                   total_todos
+                                                   ))
+
+    for title in done_todos_titles:
+        print('\t ' + title)
